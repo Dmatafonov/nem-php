@@ -122,6 +122,7 @@
           null  //Get 25 transactions that appeared directly before the transaction with paricular hash
       );
 
+
    ```
    
    
@@ -136,6 +137,7 @@
           null, //Get 25 transactions that appeared directly before the transaction with paricular id
           null  //Get 25 transactions that appeared directly before the transaction with paricular hash
       );
+      
 
    ```
    
@@ -149,5 +151,6 @@
       $transactions = $nemPhp->accountUnconfirmedTransactions(
           null, //address - if ommitted, then address is taken from public key
       );
+      
 
    ```
