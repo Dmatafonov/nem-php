@@ -175,3 +175,44 @@
       
 
    ```
+   
+   
+<h3>Other supported API calls</h3>
+   
+   ```
+   
+      //Account related calls
+      ->status(); //get account status
+      ->accountGenerate(); //generate new account
+      ->accountGet(); //request account data
+      ->accountGetFromPublicKey(); //same as above
+      ->accountGetForwarded(); //Requesting the original account data for a delegate account
+      ->accountStatus(); //short account status
+      ->localAccountTransfersIncoming($id = null, $hash = null); //same as accountTransfersIncoming but with messages decrypted
+      ->localAccountTransfersOutgoing($id = null, $hash = null); //same as accountTransfersOutgoing but with messages decrypted
+      ->localAccountTransfersAll($id = null, $hash = null); //same as accountTransfersAll but with messages decrypted
+      ->accountHarvests($address = null, $hash = null); //Requesting harvest info data for an account
+      ->accountImportances(); //Retrieving account importances for accounts
+      ->accountNamespacePage(); //Retrieving namespaces that an account owns
+      ->accountMosaicDefinitionPage($address = null, $parent = null, $id = null); //raw mosaic definition, same as fetchMosaicInfo
+      ->accountMosaicOwned($address = null); //Retrieving mosaics that an account owns
+      ->accountUnlock(); //Unlocking accounts
+      ->accountLock(); //Locking accounts
+      ->accountUnlockedInfo(); //Retrieving the unlock info
+      ->accountHistoricalGet($address = null, $startHeight, $endHeight, $increment = 1000); //Retrieving historical account data
+      
+      
+      //Blockchain related calls
+      ->chainHeight(); //Block chain height
+      ->chainScore(); //Block chain score
+      ->chainLastBlock(); //Last block of the block chain score
+      ->blockAtPublic($blockHeight); //Getting a block with a given height
+      ->localChainBlocksAfter($blockHeight); //Getting part of a chain
+      
+      //Namespaces
+      ->namespaceRootPage(); //Retrieving root namespaces
+      ->namespaceRequest($id); //Retrieving a specific namespace
+      
+      
+   ```
+   
