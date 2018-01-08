@@ -91,4 +91,17 @@
 
    ```
       
+<h3>Fetch incoming transactions</h3>
+   
+   ```php
 
+     //Get 25 most recent transactions 
+      $transactions = $nemPhp->accountTransfersIncoming();
+
+      //Get 25 transactions that appeared directly before the transaction with paricular id
+      $transactions = $nemPhp->accountTransfersIncoming(null, $id);
+      
+      //Get 25 transactions that appeared directly before the transaction with paricular hash
+      $transactions = $nemPhp->accountTransfersIncoming(null, null, '674cf29a76c2e86368f8ff6608db731fa6aa54cf4bfdf4efe6c65c946eb3ae01');
+
+   ```
