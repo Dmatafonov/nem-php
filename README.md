@@ -91,6 +91,24 @@
 
    ```
       
+<h3>Get mosaic info by namespace and name</h3>
+
+   ```php
+   
+   $mosaic = $nemPhp->fetchMosaicInfo('zeus-test', 'aaple');
+   
+   ```
+   
+
+<h3>Get all mosaics info by namespace </h3>
+
+   ```php
+   
+   $mosaics = $nemPhp->fetchAllMosaics('zeus-test');
+   
+   ```
+      
+      
 <h3>Fetch incoming transactions</h3>
    
    ```php
