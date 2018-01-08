@@ -80,9 +80,9 @@ Class NemApi {
      * https://nemproject.github.io/#requesting-the-account-data
      * @return array
      */
-    public function accountGetFromPublicKey(){
+    public function accountGetFromPublicKey($public = null){
         return $this->fetch_nis('/account/get/from-public-key', [
-            'publicKey' => $this->public
+            'publicKey' => ($public) ? $public : $this->public
         ]);
     }
 
