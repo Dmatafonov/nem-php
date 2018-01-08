@@ -90,7 +90,7 @@ Class NemPhp extends NemApi{
      * Some transactions require private key send. Hence, you should never try sending it other then to your own local NIS server
      * @throws Exception
      */
-    private function checkIfSecure(){
+    public function checkIfSecure(){
 
         if ($this->nis_address != 'http://127.0.0.1' && $this->nis_address != 'http://localhost' && $this->securityCheck) {
             throw new Exception ('Insecure request try: Use requests that use this structure only when NIS is running locally');
@@ -126,6 +126,9 @@ Class NemPhp extends NemApi{
             'signer'        => $this->public,
             'mosaics'       => $mosaics
         ];
+
+        $this->estimateTransactionFee();
+        return $this->transaction;
     }
 
 
@@ -141,7 +144,7 @@ Class NemPhp extends NemApi{
         //First check if that mosaic is already added to transaction
         if (is_array($mosaics = $this->transaction['mosaics'])) {
             foreach ($mosaics as $mosaic) {
-                if ($mosaic['name'] == $name && $mosaic['namespaceId'] == $namespace) {
+                if ($mosaic['mosaicId']['name'] == $name && $mosaic['mosaicId']['namespaceId'] == $namespace) {
                     throw new Exception('Can\'t add this mosaic in transaction since its already there. First remove it if you want to change amount.');
                 }
             }
@@ -160,6 +163,9 @@ Class NemPhp extends NemApi{
             ],
             'quantity'  => $amount
         ];
+
+        //Fees
+        $this->estimateTransactionFee();
     }
 
 
@@ -177,7 +183,7 @@ Class NemPhp extends NemApi{
      * Start transaction
      * @return array
      */
-    public function makeTransaction(){
+    public function commitTransaction(){
         return $this->requestPrepareAnnounce();
     }
 
@@ -274,6 +280,69 @@ Class NemPhp extends NemApi{
             : [];
 
        return $this->_mosaicsToObject($mosaics);
+    }
+
+
+    /**
+     * https://nemproject.github.io/#transaction-fees
+     * @return int
+     * @throws Exception
+     */
+    private function estimateTransactionFee(){
+
+        $fee = 0;
+
+        if (empty($this->transaction)) {
+            return $fee;
+        }
+
+
+        //Non mosaic transfer
+        if (!is_array($this->transaction['mosaics'])) {
+
+            //Fees for transferring XEM to another account: 0.05 XEM per 10,000 XEM transferred, capped at 1.25 XEM
+            $fee +=  max(
+                min(
+                    0.05 * 1000000 * floor($this->transaction['amount'] / (10000 * 1000000)),
+                    1.25 * 1000000
+                ),
+                0.05 * 1000000
+            );
+        } else {
+
+            foreach ($this->transaction['mosaics'] as $mosaic) {
+
+                $mosaicInfo = $this->fetchMosaicInfo($mosaic['mosaicId']['namespaceId'], $mosaic['mosaicId']['name']);
+
+                //mosaics with divisibility of 0 and a maximum supply of 10,000 are called small business mosaics. 0.05 XEM fee for any transfer of a small business mosaic.
+                if ($mosaicInfo['divisibility'] == 0 && $mosaicInfo['initialSupply'] <= 10000) {
+
+                    $fee += 0.05 * 1000000;
+                } else {
+
+                    //For each mosaic that is transferred the fee is calculated the following way: given a mosaic with initial supply s, divisibility d and quantity q, the XEM equivalent is (round to the next smaller integer)
+                    // xemEquivalent = (8,999,999,999 * q) / (s * 10^d)
+
+                    $xemEquivalent = (8999999999 * $mosaic['amount']) / ($mosaicInfo['initialSupply'] * pow(10, $mosaicInfo['divisibility']));
+                    $fee +=  max(
+                        min(
+                            0.05 * 1000000 * floor($xemEquivalent / (10000 * 1000000)),
+                            1.25 * 1000000
+                        ),
+                        0.05 * 1000000
+                    );
+
+                }
+            }
+        }
+
+        //Add message fee
+        if (isset($this->transaction['message']['payload']) && strlen($this->transaction['message']['payload'])) {
+            $fee += floor(strlen($this->transaction['message']['payload']) / 32) + 1;
+        }
+
+        return $this->transaction['fee'] = $fee;
+
     }
 
 }
