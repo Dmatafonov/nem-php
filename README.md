@@ -31,4 +31,5 @@
       ];
 
       $nemPhp = new NemPhp($config);  //Get library
+      print_r($nemPhp->heartbit()); //Check if its working
    </pre>
