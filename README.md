@@ -31,5 +31,62 @@
       ];
 
       $nemPhp = new NemPhp($config);  //Get library
-      print_r($nemPhp->heartbit()); //Check if its working
+      print_r($nemPhp->heartbit()); //Check if it's working
+
    </pre>
+   
+<h1>Usage</h1>
+   
+   <h3>Send XEM</h3>
+   
+   <pre>
+   
+     //Prepare transaction
+      $nemPhp->prepareTransaction(
+            1, //How much XEM to send 
+            0, //Put higher fee if you want, otherwise leave it zero so minimum fee will be taken off
+            'NDNRSW-FEQ256-HQLUYT-L6SOS3-RYHEJK-BLOWL2-C6MJ' //adress where to send
+      );
+      
+      //You can check your future transaction before sending
+      print_r($nemPhp->transaction);
+      
+      //And commit transaction to the network (you shoud almost immidiately hear 'dink' sound from you wallet
+      $result = $nemPhp->commitTransaction();
+      
+      //See how its gone
+      print_r($result);
+      
+   </pre>
+   
+   <h3>Send Mosaic</h3>
+   
+   <pre>
+
+     //Prepare transaction
+      $nemPhp->prepareTransaction(
+            1, //How much mosaics to send 
+            0, //Put higher fee if you want, otherwise leave it zero so minimum fee will be taken off
+            'NDNRSW-FEQ256-HQLUYT-L6SOS3-RYHEJK-BLOWL2-C6MJ' //adress where to send
+      );
+
+      //Add mosaics to your transaction
+      $nemPhp->addMosaicToTransaction(
+         'zeus-test', //namespace
+         'aapl', //name
+         1 //quantity
+      );
+
+
+      //You can check your future transaction before sending
+      print_r($nemPhp->transaction);
+
+      //And commit transaction to the network (you shoud almost immidiately hear 'dink' sound from you wallet
+      $result = $nemPhp->commitTransaction();
+
+      //See how its gone
+      print_r($result);
+
+   </pre>
+      
+   
