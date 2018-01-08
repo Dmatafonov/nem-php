@@ -12,12 +12,13 @@
 
    <h3>Clone this repo to folder nem-php</h3>
    ```
-mkdir nem-php
-cd nem-php
-clone https://github.com/Dmatafonov/nem-php.git .
+      mkdir nem-php
+      cd nem-php
+      clone https://github.com/Dmatafonov/nem-php.git .
    ```
    
    <h3>Set up library</h3>
+   
    ```php
       
       require_once 'nem-php/nem-php.php';
@@ -32,7 +33,6 @@ clone https://github.com/Dmatafonov/nem-php.git .
 
       $nemPhp = new NemPhp($config);  //Get library
       print_r($nemPhp->heartbit()); //Check if it's working
-      
 
    ```
    
