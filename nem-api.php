@@ -40,7 +40,7 @@ Class NemApi {
      * @return array
      */
     public function status(){
-        return $this->fetch_nis('/heartbeat');
+        return $this->fetch_nis('/status');
     }
 
     /*
@@ -116,7 +116,7 @@ Class NemApi {
 
 
     /**
-     * * Requesting transaction data for an account
+     * * Requesting incoming transaction data for an account
      * https://nemproject.github.io/#requesting-transaction-data-for-an-account
      * @param $address
      * @param $hash
@@ -133,14 +133,67 @@ Class NemApi {
         ]);
     }
 
+
+    /**
+     * * Requesting outgoing transaction data for an account
+     * https://nemproject.github.io/#requesting-transaction-data-for-an-account
+     * @param $address
+     * @param $hash
+     * @param $id
+     * @return array
+     */
+    public function accountTransfersOutgoing($address = null, $hash = null, $id= null){
+
+        if (!$address) $address = $this->getAddressFromPublicKey();
+        return $this->fetch_nis('/account/transfers/outgoing', [
+            'address'   => str_replace('-', '', $address),
+            'hash'      => $hash,
+            'id'        => $id
+        ]);
+    }
+
+
+    /**
+     * * Requesting all transaction data for an account
+     * https://nemproject.github.io/#requesting-transaction-data-for-an-account
+     * @param $address
+     * @param $hash
+     * @param $id
+     * @return array
+     */
+    public function accountTransfersAll($address = null, $hash = null, $id= null){
+
+        if (!$address) $address = $this->getAddressFromPublicKey();
+        return $this->fetch_nis('/account/transfers/all', [
+            'address'   => str_replace('-', '', $address),
+            'hash'      => $hash,
+            'id'        => $id
+        ]);
+    }
+
+
+    /**
+     * Requesting uncofirmed transaction data for an account
+     * https://nemproject.github.io/#requesting-transaction-data-for-an-account
+     * @param $address
+     * @return array
+     */
+    public function accountUnconfirmedTransactions($address = null){
+
+        if (!$address) $address = $this->getAddressFromPublicKey();
+        return $this->fetch_nis('/account/unconfirmedTransactions', [
+            'address'   => str_replace('-', '', $address)
+        ]);
+    }
+
     /**
      * Transaction incoming data with decoded messages
      * https://nemproject.github.io/#transaction-data-with-decoded-messages
      * @return array
      */
-    public function localAccountTransfersIncoming(){
+    public function localAccountTransfersIncoming($id = null, $hash = null){
 
-        $params = $this->AccountPrivateKeyTransactionsPage();
+        $params = $this->AccountPrivateKeyTransactionsPage($id, $hash);
 
         return $this->fetch_nis('/local/account/transfers/incoming', $params
             , 'POST');
@@ -151,9 +204,9 @@ Class NemApi {
      * https://nemproject.github.io/#transaction-data-with-decoded-messages
      * @return array
      */
-    public function localAccountTransfersOutgoing(){
+    public function localAccountTransfersOutgoing($id = null, $hash = null){
 
-        $params = $this->AccountPrivateKeyTransactionsPage();
+        $params = $this->AccountPrivateKeyTransactionsPage($id, $hash);
 
         return $this->fetch_nis('/local/account/transfers/outgoing', $params
             , 'POST');
@@ -164,9 +217,9 @@ Class NemApi {
      * https://nemproject.github.io/#transaction-data-with-decoded-messages
      * @return array
      */
-    public function localAccountTransfersAll(){
+    public function localAccountTransfersAll($id = null, $hash = null){
 
-        $params = $this->AccountPrivateKeyTransactionsPage();
+        $params = $this->AccountPrivateKeyTransactionsPage($id, $hash);
         return $this->fetch_nis('/local/account/transfers/all', $params, 'POST');
     }
 
@@ -194,7 +247,7 @@ Class NemApi {
     }
 
     /**
-     * * Retrieving account importances for accounts
+     * Retrieving namespaces that an account owns
      * https://nemproject.github.io/#requesting-transaction-data-for-an-account
      * @param $address
      * @param null $parent
@@ -444,12 +497,12 @@ Class NemApi {
 
         $this->checkIfSecure();
 
-        return $this->fetch_nis('/transaction/prepare-announce', [
+        return $this->fetch_nis('/transaction/prepare-announce',
             [
                 'privateKey'    => $this->private,
                 'transaction'   => $this->transaction
             ]
-        ], 'POST');
+        , 'POST');
     }
 
 }
