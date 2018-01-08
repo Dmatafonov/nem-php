@@ -222,3 +222,8 @@
       
    ```
    
+<h2>Donate if you like it</h2>
+<p>XEM: <b>NDNRSW-FEQ256-HQLUYT-L6SOS3-RYHEJK-BLOWL2-C6MJ</b></p>
+<p>BTC: <b>146FrBnpcNUHGtezuwe4XXV42kWAUjU6A3</b></p>
+
+<h2>Contibute if you like it</h2>
