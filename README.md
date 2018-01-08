@@ -11,14 +11,14 @@
 <h1>PHP library installation</h1>
 
    <h3>Clone this repo to folder nem-php</h3>
-   <pre>
-      mkdir nem-php
-      cd nem-php
-      clone https://github.com/Dmatafonov/nem-php.git .
-   </pre>
+   ```
+mkdir nem-php
+cd nem-php
+clone https://github.com/Dmatafonov/nem-php.git .
+   ```
    
    <h3>Set up library</h3>
-   <pre>
+   ```php
       
       require_once 'nem-php/nem-php.php';
       
@@ -32,14 +32,15 @@
 
       $nemPhp = new NemPhp($config);  //Get library
       print_r($nemPhp->heartbit()); //Check if it's working
+      
 
-   </pre>
+   ```
    
 <h1>Usage</h1>
    
    <h3>Send XEM</h3>
    
-   <pre>
+   ```php
    
      //Prepare transaction
       $nemPhp->prepareTransaction(
@@ -57,7 +58,7 @@
       //See how its gone
       print_r($result);
       
-   </pre>
+   ```
    
    <h3>Send Mosaic</h3>
    
