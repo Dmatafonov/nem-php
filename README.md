@@ -1,5 +1,8 @@
 <h1>Open source NEM PHP library</h1>
-<p>The best blockchain is NEM!</p>
+<p> PHP implementation of official NEM API : https://nemproject.github.io/</p> 
+<p>Donate if you like it</p>
+<p>XEM: NDNRSW-FEQ256-HQLUYT-L6SOS3-RYHEJK-BLOWL2-C6MJ</p>
+<p>BTC: 146FrBnpcNUHGtezuwe4XXV42kWAUjU6A3</p>
 
 <img src="https://nemproject.github.io/logo.png" style="height: 100px"/>
 <h1>NIS server installation</h1>
