@@ -112,6 +112,7 @@
    
    <h3>Fetch outgoing transactions</h3>
    
+   
    ```php
 
      //Get 25 most recent transactions 
@@ -123,7 +124,9 @@
 
    ```
    
+   
       <h3>Fetch all transactions</h3>
+      
    
    ```php
 
@@ -136,7 +139,9 @@
 
    ```
    
+   
          <h3>Fetch uncofirmed transactions</h3>
+   
    
    ```php
 
