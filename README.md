@@ -126,7 +126,7 @@
    ```
    
    
-      <h3>Fetch all transactions</h3>
+<h3>Fetch all transactions</h3>
       
    
    ```php
@@ -142,7 +142,7 @@
    ```
    
    
-         <h3>Fetch uncofirmed transactions</h3>
+<h3>Fetch uncofirmed transactions</h3>
    
    
    ```php
