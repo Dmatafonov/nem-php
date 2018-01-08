@@ -96,12 +96,53 @@
    ```php
 
      //Get 25 most recent transactions 
-      $transactions = $nemPhp->accountTransfersIncoming();
+      $transactions = $nemPhp->accountTransfersIncoming(
+          null, //address - if ommitted, then address is taken from public key
+          null, //Get 25 transactions that appeared directly before the transaction with paricular id
+          null  //Get 25 transactions that appeared directly before the transaction with paricular hash
+      );
 
       //Get 25 transactions that appeared directly before the transaction with paricular id
       $transactions = $nemPhp->accountTransfersIncoming(null, $id);
       
       //Get 25 transactions that appeared directly before the transaction with paricular hash
       $transactions = $nemPhp->accountTransfersIncoming(null, null, '674cf29a76c2e86368f8ff6608db731fa6aa54cf4bfdf4efe6c65c946eb3ae01');
+
+   ```
+   
+   <h3>Fetch outgoing transactions</h3>
+   
+   ```php
+
+     //Get 25 most recent transactions 
+      $transactions = $nemPhp->accountTransfersOutgoing(
+          null, //address - if ommitted, then address is taken from public key
+          null, //Get 25 transactions that appeared directly before the transaction with paricular id
+          null  //Get 25 transactions that appeared directly before the transaction with paricular hash
+      );
+
+   ```
+   
+      <h3>Fetch all transactions</h3>
+   
+   ```php
+
+     //Get 25 most recent transactions 
+      $transactions = $nemPhp->accountTransfersAll(
+          null, //address - if ommitted, then address is taken from public key
+          null, //Get 25 transactions that appeared directly before the transaction with paricular id
+          null  //Get 25 transactions that appeared directly before the transaction with paricular hash
+      );
+
+   ```
+   
+         <h3>Fetch uncofirmed transactions</h3>
+   
+   ```php
+
+     //Get 25 most recent transactions 
+      $transactions = $nemPhp->accountUnconfirmedTransactions(
+          null, //address - if ommitted, then address is taken from public key
+      );
 
    ```
