@@ -56,6 +56,9 @@
       //You can check your future transaction before sending
       print_r($nemPhp->transaction);
       
+      //Or get estimated transaction fee in microXEM (actual amount in XEM will be divided vy 1000000)
+      echo $nemPhp->transaction['fee'];
+      
       //And commit transaction to the network (you shoud almost immidiately hear 'dink' sound from you wallet
       $result = $nemPhp->commitTransaction();
       
@@ -85,6 +88,9 @@
 
       //You can check your future transaction before sending
       print_r($nemPhp->transaction);
+      
+      //Or get estimated transaction fee in microXEM (actual amount in XEM will be divided vy 1000000)
+      echo $nemPhp->transaction['fee']; 
 
       //And commit transaction to the network (you shoud almost immidiately hear 'dink' sound from you wallet
       $result = $nemPhp->commitTransaction();
