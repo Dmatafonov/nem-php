@@ -61,7 +61,7 @@
    
    <h3>Send Mosaic</h3>
    
-   <pre>
+   ```php
 
      //Prepare transaction
       $nemPhp->prepareTransaction(
@@ -87,8 +87,6 @@
       //See how its gone
       print_r($result);
 
-   </pre>
-      
-   ```php
-   test();
    ```
+      
+
