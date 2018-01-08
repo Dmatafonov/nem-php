@@ -219,5 +219,5 @@
       
    ```
    
-<h2>Donate if you like it, contibute if you don't have NEM yet :)</h2>
+<h2>Donate if you like it, contibute if you don't have XEM yet :)</h2>
 <p>XEM: <b>NDNRSW-FEQ256-HQLUYT-L6SOS3-RYHEJK-BLOWL2-C6MJ</b></p>
