@@ -188,7 +188,7 @@
       ->status(); //get account status
       ->accountGenerate(); //generate new account
       ->accountGet(); //request account data
-      ->accountGetFromPublicKey(); //same as above
+      ->accountGetFromPublicKey($public = null); //same as above, ut you can put someone's public key to gind out his address and how rich he is
       ->accountGetForwarded(); //Requesting the original account data for a delegate account
       ->accountStatus(); //short account status
       ->localAccountTransfersIncoming($id = null, $hash = null); //same as accountTransfersIncoming but with messages decrypted
