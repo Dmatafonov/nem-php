@@ -52,7 +52,7 @@ Class NemApi {
 
     /**
      * Generating new account data
-     * https://nemproject.github.io/#retrieving-account-data
+     * https://nemproject.github.io/#generating-new-account-data
      * @return array
      */
     public function accountGenerate(){
@@ -293,7 +293,7 @@ Class NemApi {
     public function accountMosaicOwned($address = null){
 
         if (!$address) $address = $this->getAddressFromPublicKey();
-        return $this->fetch_nis('/account/mosaic/definition/page', [
+        return $this->fetch_nis('/account/mosaic/owned', [
             'address'   => str_replace('-', '', $address)
         ]);
     }
