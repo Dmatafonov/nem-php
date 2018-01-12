@@ -105,16 +105,17 @@ Class NemPhp extends NemApi{
      * @param array|null $mosaics   Array of mosaics attached to transaction - in case mosaics are attached, it multiplies all mosaics amount in transfer
      * @param null|string $message  UTF8 encoded string.
      * @param bool $secure          Should be message encoded or not
+     * @param bool $extractFeeFromTransaction Should be fee extracted from amount or not
      * @return array
      * @throws Exception
      */
 
-    public function prepareTransaction($amount, $fee, $recipient, $mosaics = null, $message = null, $secure = false){
+    public function prepareTransaction($amount, $fee, $recipient, $mosaics = null, $message = null, $secure = false, $extractFeeFromTransaction = false){
 
         $this->transaction = [
-            'timeStamp'     => (time() - 1427587585), // The number of seconds elapsed since the creation of the nemesis block.
-            'amount'        => $amount * 1000000,      //The amount of micro NEM that is transferred from sender to recipient.
-            'fee'           => $fee    *1000000, //The fee for the transaction. The higher the fee, the higher the priority of the transaction. Transactions with high priority get included in a block before transactions with lower priority.
+            'timeStamp'     => (time() - 1427587585),           // The number of seconds elapsed since the creation of the nemesis block.
+            'amount'        => round($amount * 1000000),        //The amount of micro NEM that is transferred from sender to recipient.
+            'fee'           => round($fee    *1000000),         //The fee for the transaction. The higher the fee, the higher the priority of the transaction. Transactions with high priority get included in a block before transactions with lower priority.
             'recipient'     => str_replace('-', '', $recipient),
             'type'          => 257 ,
             'deadline'      => (time() - 1427587585 + 43200), // Remittance deadline
@@ -123,11 +124,21 @@ Class NemPhp extends NemApi{
                 'type'    => $secure ? 2 : 1 //encoded message or not
             ],
             'version'       => $this->version ,
-            'signer'        => $this->public,
-            'mosaics'       => $mosaics
+            'signer'        => $this->public
         ];
 
+        if (is_array($mosaics)) {
+            $this->transaction['mosaics'] = $mosaics;
+        } else {
+            $this->transaction['mosaics'] = [];
+        }
+
         $this->estimateTransactionFee();
+
+        if ($extractFeeFromTransaction === true) {
+            $this->transaction['amount'] -= $this->transaction['fee'];
+        }
+
         return $this->transaction;
     }
 
@@ -173,8 +184,8 @@ Class NemPhp extends NemApi{
      * Get address string from public key
      * @return mixed
      */
-    public function getAddressFromPublicKey(){
-        $accountInfo = $this->accountGetFromPublicKey();
+    public function getAddressFromPublicKey($public = null){
+        $accountInfo = $this->accountGetFromPublicKey($public);
         return $accountInfo['result']['account']['address'];
     }
 
@@ -298,7 +309,7 @@ Class NemPhp extends NemApi{
 
 
         //Non mosaic transfer
-        if (!is_array($this->transaction['mosaics'])) {
+        if (!is_array($this->transaction['mosaics']) || empty($this->transaction['mosaics'])) {
 
             //Fees for transferring XEM to another account: 0.05 XEM per 10,000 XEM transferred, capped at 1.25 XEM
             $fee +=  max(
@@ -342,7 +353,6 @@ Class NemPhp extends NemApi{
         }
 
         return $this->transaction['fee'] = $fee;
-
     }
 
 }
