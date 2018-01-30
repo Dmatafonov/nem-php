@@ -349,7 +349,7 @@ Class NemPhp extends NemApi{
 
         //Add message fee
         if (isset($this->transaction['message']['payload']) && strlen($this->transaction['message']['payload'])) {
-            $fee += floor(strlen($this->transaction['message']['payload']) / 32) + 1;
+            $fee += 1000000 * 0.05 * (floor(strlen(hex2bin($this->transaction['message']['payload'])) / 32) + 1);
         }
 
         return $this->transaction['fee'] = $fee;
