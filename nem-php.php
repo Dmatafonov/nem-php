@@ -67,8 +67,6 @@ Class NemPhp extends NemApi{
         curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($curl,CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl,CURLOPT_COOKIEJAR,      'cookie');
-        curl_setopt($curl,CURLOPT_COOKIEFILE,     'tmp');
         curl_setopt($curl,CURLOPT_FOLLOWLOCATION, TRUE);
         curl_setopt( $curl , CURLOPT_TIMEOUT , 20 ) ;
 
@@ -334,7 +332,7 @@ Class NemPhp extends NemApi{
                     //For each mosaic that is transferred the fee is calculated the following way: given a mosaic with initial supply s, divisibility d and quantity q, the XEM equivalent is (round to the next smaller integer)
                     // xemEquivalent = (8,999,999,999 * q) / (s * 10^d)
 
-                    $xemEquivalent = (8999999999 * $mosaic['amount']) / ($mosaicInfo['initialSupply'] * pow(10, $mosaicInfo['divisibility']));
+                    $xemEquivalent = (8999999999 * $mosaic['quantity']) / ($mosaicInfo['initialSupply'] * pow(10, $mosaicInfo['divisibility']));
                     $fee +=  max(
                         min(
                             0.05 * 1000000 * floor($xemEquivalent / (10000 * 1000000)),
