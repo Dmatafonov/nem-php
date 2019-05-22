@@ -67,8 +67,6 @@ Class NemPhp extends NemApi{
         curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($curl,CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl,CURLOPT_COOKIEJAR,      'cookie');
-        curl_setopt($curl,CURLOPT_COOKIEFILE,     'tmp');
         curl_setopt($curl,CURLOPT_FOLLOWLOCATION, TRUE);
         curl_setopt( $curl , CURLOPT_TIMEOUT , 20 ) ;
 
